@@ -14,12 +14,9 @@ class CountryDetails extends Component {
   }
 
   componentDidUpdate(previousProps) {
-    console.log('component did update');
-    console.log(this.props.match.params);
     if (this.props.match.params.id !== previousProps.match.params.id) {
       this.loadCountry();
     }
-    console.log(this.state.country);
   }
 
   loadCountry = () => {
@@ -28,6 +25,12 @@ class CountryDetails extends Component {
     );
     console.log('country:', country);
     this.setState({ country: country });
+  };
+
+  filterByCca3 = (border) => {
+    const country = countries.find((item) => item.cca3 === border);
+    return country.name.common;
+    console.log(country);
   };
 
   render() {
@@ -56,7 +59,9 @@ class CountryDetails extends Component {
                     <ul>
                       {this.state.country.borders.map((border) => (
                         <li>
-                          <Link to={`/${border}`}>Placeholder name</Link>
+                          <Link to={`/${border}`}>
+                            {this.filterByCca3(border)}
+                          </Link>
                         </li>
                       ))}
                     </ul>
